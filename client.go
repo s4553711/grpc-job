@@ -20,14 +20,10 @@
 package main
 
 import (
-	"context"
 	"flag"
-	"log"
-	"time"
+	"fmt"
 
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-	pb "github.com/s4553711/grpc-jobs/hello"
+	sv "github.com/s4553711/grpc-jobs/simple_server"
 )
 
 const (
@@ -40,21 +36,9 @@ var (
 )
 
 func main() {
+	fmt.Println("Start demo client")
 	flag.Parse()
-	// Set up a connection to the server.
-	conn, err := grpc.Dial(*addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatalf("did not connect: %v", err)
-	}
-	defer conn.Close()
-	c := pb.NewHelloServiceClient(conn)
-
-	// Contact the server and print out its response.
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
-	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: *name})
-	if err != nil {
-		log.Fatalf("could not greet: %v", err)
-	}
-	log.Printf("Greeting: %s", r.GetReply())
+	client := sv.CreateNewClient(*addr)
+	client.SayHello()
+	client.RegNode("node2", 3344)
 }

@@ -1,0 +1,7 @@
+# Build
+
+```
+protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative hello/hello.proto
+go run server.go
+go run client.go
+```

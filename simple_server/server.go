@@ -21,6 +21,12 @@ func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 	return &pb.HelloResponse{Reply: "Hello " + in.GetName()}, nil
 }
 
+// RegNode is the place for slave node to register and add to available host list
+func (s *server) RegNode(ctx context.Context, in *pb.RegReq) (*pb.RegRep, error) {
+	log.Printf("Received slave %s", in.GetHostname())
+	return &pb.RegRep{Reply: "Hello "+in.GetHostname()}, nil
+}
+
 type Gserver struct {
 	port int
 }

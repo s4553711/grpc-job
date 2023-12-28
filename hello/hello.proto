@@ -6,6 +6,7 @@ package hello;
 
 service HelloService {
   rpc SayHello (HelloRequest) returns (HelloResponse);
+  rpc RegNode (RegReq) returns (RegRep);
 }
 
 message HelloRequest {
@@ -13,5 +14,14 @@ message HelloRequest {
 }
 
 message HelloResponse {
+  string reply = 1;
+}
+
+message RegReq {
+  string hostname = 1;
+  uint32 port = 2;
+}
+
+message RegRep {
   string reply = 1;
 }
