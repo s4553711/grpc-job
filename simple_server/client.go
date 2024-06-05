@@ -55,3 +55,29 @@ func (c *Gclient) SayHello() {
 	}
 	log.Printf("Ack from Greeting: %s", r.GetReply())
 }
+
+func (c *Gclient) ReqJob(cli string) {
+	c.Connect()
+	defer c.conn.Close()
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	r, err := c.sc.ReqJob(ctx, &pb.JobReq{Command: cli})
+	if err != nil {
+		log.Fatalf("could not greet: %v", err)
+	}
+	log.Printf("Ack from Greeting: %s", r.GetReply())
+}
+
+func (c *Gclient) StopServer() {
+	c.Connect()
+	defer c.conn.Close()
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	r, err := c.sc.Terminate(ctx, &pb.Empty{})
+	if err != nil {
+		log.Fatalf("could not greet: %v", err)
+	}
+	log.Printf("Ack from Greeting: %s", r.GetReply())
+}

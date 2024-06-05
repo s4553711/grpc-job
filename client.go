@@ -41,4 +41,6 @@ func main() {
 	client := sv.CreateNewClient(*addr)
 	client.SayHello()
 	client.RegNode("node2", 3344)
+	client.ReqJob("sleep 111")
+	client.StopServer()
 }

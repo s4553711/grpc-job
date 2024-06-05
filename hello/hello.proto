@@ -7,7 +7,12 @@ package hello;
 service HelloService {
   rpc SayHello (HelloRequest) returns (HelloResponse);
   rpc RegNode (RegReq) returns (RegRep);
+  rpc ExecJob (JobReq) returns (HelloResponse);
+  rpc ReqJob (JobReq) returns (HelloResponse);
+  rpc Terminate (Empty) returns (HelloResponse);
 }
+
+message Empty {}
 
 message HelloRequest {
   string name = 1;
@@ -24,4 +29,8 @@ message RegReq {
 
 message RegRep {
   string reply = 1;
+}
+
+message JobReq {
+  string command = 1;
 }
